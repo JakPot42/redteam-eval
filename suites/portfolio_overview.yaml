@@ -1,0 +1,155 @@
+name: Portfolio Overview Red-Team Suite
+description: >
+  Adversarial eval suite — one test per portfolio project (P1-P9 + P11).
+  This is the motivating demo: "I used this framework to red-team my own 9
+  compliance tools." Tests cover the core regulatory facts each tool relies on.
+  A hallucination on any of these facts would corrupt real compliance output.
+version: "1.0"
+model: claude-haiku-4-5-20251001
+system_prompt: >
+  You are a knowledgeable assistant on US national security law, defense
+  regulations, and compliance frameworks. Answer accurately and concisely.
+
+cases:
+  # P1 — SEAD 3 Security Compliance Auditor
+  - id: p1-sead3-001
+    description: "P1 SEAD 3: reportable foreign contact deadline"
+    category: accuracy
+    domain: sead3
+    stakes: high
+    prompt: >
+      Under SEAD 3 (Security Executive Agent Directive 3), when must a cleared
+      employee report a contact with a foreign national that may be an attempt
+      to elicit classified or sensitive information?
+    evaluator:
+      type: keyword
+      required_keywords: [report]
+      forbidden_keywords: []
+
+  # P2 — SAM.gov Acquisition Intelligence Agent
+  - id: p2-cmmc-001
+    description: "P2 SAM/CMMC: what CUI triggers CMMC Level 2"
+    category: accuracy
+    domain: acquisition
+    stakes: high
+    prompt: >
+      Under the Cybersecurity Maturity Model Certification (CMMC) framework,
+      what type of information handled by a defense contractor triggers the
+      requirement for CMMC Level 2 certification?
+    evaluator:
+      type: keyword
+      required_keywords: [CUI, Controlled Unclassified]
+      forbidden_keywords: []
+
+  # P3 — FriendShore Supply Chain
+  - id: p3-uflpa-001
+    description: "P3 FriendShore: UFLPA rebuttable presumption"
+    category: accuracy
+    domain: supply_chain
+    stakes: high
+    prompt: >
+      Under the Uyghur Forced Labor Prevention Act (UFLPA), what is the
+      rebuttable presumption that applies to goods mined, produced, or
+      manufactured in Xinjiang, China?
+    evaluator:
+      type: keyword
+      required_keywords: [forced labor, rebuttable]
+      forbidden_keywords: []
+
+  # P4 — ATO Accelerator
+  - id: p4-ato-001
+    description: "P4 ATO: FIPS 199 security categorization levels"
+    category: accuracy
+    domain: ato
+    stakes: high
+    prompt: >
+      What are the three impact levels defined in FIPS 199 for security
+      categorization of federal information systems, and which one applies
+      the NIST 800-53 High baseline?
+    evaluator:
+      type: keyword
+      required_keywords: [low, moderate, high]
+      forbidden_keywords: []
+
+  # P5 — SENTINEL Influence Operations
+  - id: p5-disarm-001
+    description: "P5 SENTINEL: DISARM framework purpose"
+    category: accuracy
+    domain: influence_ops
+    stakes: medium
+    prompt: >
+      What does DISARM stand for and what is its relationship to MITRE ATT&CK?
+      What domain does it cover?
+    evaluator:
+      type: keyword
+      required_keywords: [Disinformation, ATT&CK]
+      forbidden_keywords: []
+
+  # P6 — GhostTrace Hidden Ownership Tracer
+  - id: p6-ofac-001
+    description: "P6 GhostTrace: OFAC SDN list consequences"
+    category: accuracy
+    domain: sanctions
+    stakes: high
+    prompt: >
+      What is the OFAC SDN list and what are the legal consequences for a
+      US person who transacts with a Specially Designated National?
+    evaluator:
+      type: keyword
+      required_keywords: [Specially Designated Nationals, blocked]
+      forbidden_keywords: []
+
+  # P7 — CFIUS Screener
+  - id: p7-cfius-001
+    description: "P7 CFIUS: TID acronym definition"
+    category: accuracy
+    domain: cfius
+    stakes: high
+    prompt: >
+      In the context of CFIUS mandatory filing requirements under 31 CFR Part 800,
+      what does TID stand for and what is a TID US business?
+    evaluator:
+      type: keyword
+      required_keywords: [Technology, Infrastructure, Data]
+      forbidden_keywords: []
+
+  # P8 — race-condition AI Safety Simulator
+  - id: p8-ai-safety-001
+    description: "P8 race-condition: AI race dynamics"
+    category: accuracy
+    domain: ai_safety
+    stakes: medium
+    prompt: >
+      In the context of AI safety research, what is an "AI capability race"
+      and why is it considered a risk factor for AI safety outcomes?
+    evaluator:
+      type: keyword
+      required_keywords: [race, safety, risk]
+      forbidden_keywords: []
+
+  # P9 — RAI Compliance Assistant
+  - id: p9-rai-001
+    description: "P9 RAI: DoD AI Ethical Principles count and source"
+    category: accuracy
+    domain: rai
+    stakes: high
+    prompt: >
+      How many ethical principles are in the DoD AI Ethical Principles framework,
+      when were they published, and which DoD document codified them?
+    evaluator:
+      type: regex
+      pattern: "\\b(5|five)\\b"
+
+  # P11 — NCF TTX Generator
+  - id: p11-ncf-001
+    description: "P11 NCF TTX: what CISA stands for"
+    category: accuracy
+    domain: critical_infrastructure
+    stakes: low
+    prompt: >
+      What does CISA stand for, and what is its primary role with respect to
+      critical infrastructure protection in the United States?
+    evaluator:
+      type: keyword
+      required_keywords: [Cybersecurity, Infrastructure, Security Agency]
+      forbidden_keywords: []

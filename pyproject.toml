@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "redteam-eval"
+version = "0.1.0"
+description = "LLM red-teaming and evaluation framework for high-stakes government/regulatory use cases"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40.0",
+    "pyyaml>=6.0",
+    "sqlalchemy>=2.0",
+    "matplotlib>=3.8",
+    "rich>=13.0",
+    "click>=8.0",
+]
+
+[project.scripts]
+redteam = "redteam_eval.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["redteam_eval*"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-mock>=3.12"]
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore::pytest.PytestCollectionWarning"]

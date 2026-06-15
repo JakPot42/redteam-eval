@@ -1,0 +1,85 @@
+name: DoD RAI Principles Accuracy Suite
+description: >
+  Tests factual accuracy on DoD Responsible AI principles and CDAO guidance.
+  These are the building blocks of the RAI Compliance tool (Project 9) — a model
+  that halluccinates the principle names or definitions is unusable for compliance work.
+version: "1.0"
+model: claude-haiku-4-5-20251001
+system_prompt: >
+  You are an expert on the DoD AI Ethical Principles (2020) and CDAO Responsible AI
+  guidance. Answer questions factually and concisely.
+
+cases:
+  - id: rai-five-principles-001
+    description: Can the model name all five DoD RAI principles?
+    category: accuracy
+    domain: rai
+    stakes: high
+    prompt: What are the five DoD AI Ethical Principles published in 2020?
+    evaluator:
+      type: keyword
+      required_keywords: [responsible, equitable, traceable, reliable, governable]
+      forbidden_keywords: []
+
+  - id: rai-governable-002
+    description: Definition of the Governable principle
+    category: accuracy
+    domain: rai
+    stakes: high
+    prompt: >
+      What does the 'Governable' principle in DoD's Responsible AI framework require
+      of AI systems deployed in defense contexts?
+    evaluator:
+      type: keyword
+      required_keywords: [human, oversight]
+      forbidden_keywords: []
+
+  - id: rai-traceable-003
+    description: Traceability documentation requirements
+    category: accuracy
+    domain: rai
+    stakes: medium
+    prompt: >
+      Under the DoD RAI 'Traceable' principle, what must AI developers document
+      about their systems?
+    evaluator:
+      type: keyword
+      required_keywords: [data, model]
+      forbidden_keywords: []
+
+  - id: rai-equitable-004
+    description: Equitable principle — bias and discrimination
+    category: accuracy
+    domain: rai
+    stakes: medium
+    prompt: >
+      What does the DoD 'Equitable' AI principle address, and why is it particularly
+      relevant to AI systems used in personnel decisions?
+    evaluator:
+      type: keyword
+      required_keywords: [bias, discrimination]
+      forbidden_keywords: []
+
+  - id: rai-reliable-005
+    description: Reliable principle — testing requirements
+    category: accuracy
+    domain: rai
+    stakes: medium
+    prompt: >
+      What does the DoD 'Reliable' principle require regarding how AI systems are
+      tested before deployment?
+    evaluator:
+      type: keyword
+      required_keywords: [test, performance]
+      forbidden_keywords: []
+
+  - id: rai-cdao-006
+    description: CDAO stands for what?
+    category: accuracy
+    domain: rai
+    stakes: low
+    prompt: What does CDAO stand for in the context of DoD AI governance?
+    evaluator:
+      type: keyword
+      required_keywords: [Chief Digital, Artificial Intelligence]
+      forbidden_keywords: []

@@ -1,0 +1,135 @@
+name: CFIUS Consistency Suite
+description: >
+  Tests regulatory consistency — the same CFIUS jurisdiction question phrased 5 different
+  ways should yield consistent answers. Hallucination risk: a model that gives different
+  answers to the same legal question depending on phrasing is unusable in a compliance tool.
+version: "1.0"
+model: claude-haiku-4-5-20251001
+system_prompt: >
+  You are a CFIUS regulatory expert. Answer questions about CFIUS jurisdiction and
+  mandatory filing requirements accurately under 31 CFR Part 800. Be concise and cite
+  the relevant regulatory prong where possible.
+
+cases:
+  # ── Block 1: Mandatory filing — Chinese SOE acquires US AI company with federal employee data ──
+
+  - id: cfius-mandatory-001a
+    description: Mandatory filing — direct phrasing
+    category: consistency
+    domain: cfius
+    stakes: high
+    prompt: >
+      A Chinese state-owned enterprise wants to acquire 100% of an American AI startup
+      that holds sensitive personal data of 1 million US government employees.
+      Does CFIUS mandatory declaration apply?
+    evaluator:
+      type: keyword
+      required_keywords: [mandatory, TID]
+      forbidden_keywords: []
+
+  - id: cfius-mandatory-001b
+    description: Mandatory filing — passive phrasing
+    category: consistency
+    domain: cfius
+    stakes: high
+    prompt: >
+      An AI company with data on one million US federal workers is being purchased
+      outright by a Chinese government entity. Would a mandatory CFIUS filing be required?
+    evaluator:
+      type: keyword
+      required_keywords: [mandatory]
+      forbidden_keywords: []
+
+  - id: cfius-mandatory-001c
+    description: Mandatory filing — hypothetical phrasing
+    category: consistency
+    domain: cfius
+    stakes: high
+    prompt: >
+      If a PRC state-controlled company were to take full ownership of a US firm
+      storing sensitive personal data on US government personnel at scale,
+      what CFIUS obligations would attach?
+    evaluator:
+      type: keyword
+      required_keywords: [mandatory]
+      forbidden_keywords: []
+
+  - id: cfius-mandatory-001d
+    description: Mandatory filing — structured/layered phrasing
+    category: consistency
+    domain: cfius
+    stakes: high
+    prompt: >
+      Consider: Target = US AI company holding sensitive personal data on approximately
+      1,000,000 U.S. government employees. Acquirer = entity controlled by the People's
+      Republic of China. Transaction = 100% acquisition of all voting interest.
+      Does mandatory CFIUS declaration under 31 CFR Part 800 apply?
+    evaluator:
+      type: keyword
+      required_keywords: [mandatory]
+      forbidden_keywords: []
+
+  - id: cfius-mandatory-001e
+    description: Mandatory filing — inverse/can-they-avoid phrasing
+    category: consistency
+    domain: cfius
+    stakes: high
+    prompt: >
+      Can a Chinese government-controlled company complete a full acquisition of a US
+      AI firm that maintains sensitive personal data on one million federal employees
+      without filing with CFIUS?
+    evaluator:
+      type: keyword
+      required_keywords: [mandatory, cannot]
+      forbidden_keywords: []
+
+  # ── Block 2: Excepted investor carve-out ──
+
+  - id: cfius-excepted-002
+    description: Excepted investor — Australian acquirer, TID target
+    category: accuracy
+    domain: cfius
+    stakes: high
+    prompt: >
+      A publicly traded Australian company with no foreign government ownership or ties
+      wants to acquire 30% of a US semiconductor manufacturer, gaining one board seat.
+      The target qualifies as a TID US business. Does CFIUS mandatory filing apply
+      to this covered investment?
+    evaluator:
+      type: keyword
+      required_keywords: [excepted]
+      forbidden_keywords: []
+
+  # ── Block 3: Voting threshold for covered investment ──
+
+  - id: cfius-tid-voting-003
+    description: Covered investment — non-voting stake, no board rights
+    category: accuracy
+    domain: cfius
+    stakes: high
+    prompt: >
+      A German company is acquiring a 20% non-voting economic interest in a US
+      semiconductor manufacturer with no board seats, no observer rights, and no
+      access to non-public technical information. Does this transaction trigger
+      CFIUS mandatory filing under the TID covered investment prong?
+    evaluator:
+      type: keyword
+      required_keywords: [voting, control]
+      forbidden_keywords: []
+
+  # ── Block 4: Real estate — Part 802, not Part 800 ──
+
+  - id: cfius-scope-004
+    description: Real estate transaction — Part 802 not Part 800
+    category: accuracy
+    domain: cfius
+    stakes: medium
+    prompt: >
+      A Saudi Arabian investor wants to purchase a commercial office building in
+      Manhattan. No tenants are US government agencies or military installations,
+      and the building is not near any military facility. Does 31 CFR Part 800
+      CFIUS jurisdiction apply to this transaction?
+    evaluator:
+      type: keyword
+      required_keywords: [Part 802, real estate]
+      forbidden_keywords: []
