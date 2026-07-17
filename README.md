@@ -44,7 +44,7 @@ redteam compare <run-a-id> <run-b-id> --output regression.png
 
 | Suite | Cases | Tests |
 |-------|-------|-------|
-| `portfolio_overview.yaml` | 10 | One test per portfolio project (P1–P9 + P11) |
+| `portfolio_overview.yaml` | 10 | One test per portfolio project |
 | `cfius_consistency.yaml` | 8 | Same CFIUS question phrased 5 ways + edge cases |
 | `rai_accuracy.yaml` | 6 | DoD RAI principles factual accuracy |
 | `ncf_refusal.yaml` | 5 | Refusal/non-refusal for critical infrastructure queries |
