@@ -210,7 +210,6 @@ This framework was designed to red-team the other projects in this portfolio:
 
 - [SEAD 3 Auditor](https://github.com/JakPot42/sead3-auditor) — security clearance compliance
 - [SAM Acquisition Agent](https://github.com/JakPot42/sam-acquisition-agent) — federal contracting
-- [FriendShore Supply Chain](https://github.com/JakPot42/friendshore-supply-chain) — supply chain de-risking
 - [ATO Accelerator](https://github.com/JakPot42/ato-accelerator) — NIST 800-53 / RMF
 - [SENTINEL](https://github.com/JakPot42/sentinel-io-engine) — influence operations
 - [GhostTrace](https://github.com/JakPot42/ghosttrace) — hidden ownership tracing
